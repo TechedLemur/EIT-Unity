@@ -5,12 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/IkeaScene.unity
     guid: 0f75aae2286d026409d2ade9135f453e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/Mixed Reality Toolkit Examples/2.7.3/Demos - HandTracking/Scenes/HandInteractionExamples.unity
     guid: 3dd4a396b5225f8469b9a1eb608bfa57
+  - enabled: 0
+    path: Assets/Scenes/mrTut.unity
+    guid: 150fb281d88655e47818fc37bc94eaea
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: b55d056a7f0d9064991598c9e21bdf0a, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7be97c16c4bcdc841b083fd722f993ea, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 4a7c6c89eb77a5e40afa9d5537e9477f, type: 2}
