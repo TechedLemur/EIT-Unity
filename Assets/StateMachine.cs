@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.SpatialAwareness;
 
 public class StateMachine : MonoBehaviour
 {
@@ -48,10 +50,27 @@ public class StateMachine : MonoBehaviour
 
     }
 
+    public void MeshVisible()
+    {
+        var observer = CoreServices.GetSpatialAwarenessSystemDataProvider<IMixedRealitySpatialAwarenessMeshObserver>();
+        observer.DisplayOption = SpatialAwarenessMeshDisplayOptions.Visible;
+    }
+    public void MeshOcclusion()
+    {
+        var observer = CoreServices.GetSpatialAwarenessSystemDataProvider<IMixedRealitySpatialAwarenessMeshObserver>();
+        observer.DisplayOption = SpatialAwarenessMeshDisplayOptions.Occlusion;
+    }
+    public void MeshNone()
+    {
+        var observer = CoreServices.GetSpatialAwarenessSystemDataProvider<IMixedRealitySpatialAwarenessMeshObserver>();
+        observer.DisplayOption = SpatialAwarenessMeshDisplayOptions.None;
+    }
+
 
     private void State0()
     {
-        // bordPlate.SetActive(true);
+        parent.SetActive(true);
+        bordPlate.SetActive(true);
         foreach (var b in this.ben)
         {
             b.SetActive(false);
@@ -65,11 +84,12 @@ public class StateMachine : MonoBehaviour
         prevButton.SetActive(false);
         nextButton.SetActive(true);
         bigSkru.SetActive(false);
+
+        tableAnimator.enabled = false;
     }
 
     private void State1()
     {
-        // bordPlate.SetActive(true);
         foreach (var b in this.ben)
         {
             b.SetActive(false);
@@ -81,10 +101,9 @@ public class StateMachine : MonoBehaviour
         prevButton.SetActive(true);
         bigSkru.SetActive(true);
     }
-    
+
     private void State2()
     {
-        // bordPlate.SetActive(true);
         foreach (var b in this.ben)
         {
             b.SetActive(true);
@@ -99,22 +118,23 @@ public class StateMachine : MonoBehaviour
         bigSkru.SetActive(false);
         benAnimator.enabled = true;
 
-    }    
+    }
 
     private void State3()
     {
-        
+
         benAnimator.enabled = false;
-        ben2.transform.localPosition = new Vector3(0, 0, 0);
+        ben1.transform.localPosition = new Vector3(0, -4, 0);
+        ben1.transform.localRotation = Quaternion.Euler(0, 0, 0);
         tableAnimator.enabled = true;
     }
-    
+
     private void State4()
     {
-        
+
 
         tableAnimator.enabled = false;
-        bord.transform.localPosition = new Vector3(0,(float) -0.56, (float)-0.75);
+        bord.transform.localPosition = new Vector3(0, (float)3.5, (float)-5);
         bord.transform.localRotation = Quaternion.Euler(0, 0, 0);
         nextButton.SetActive(false);
     }
@@ -152,7 +172,7 @@ public class StateMachine : MonoBehaviour
 
         this.UpdateState();
 
-        
+
 
     }
     public void PreviousState()
@@ -178,7 +198,7 @@ public class StateMachine : MonoBehaviour
             tableAnimator.enabled = false;
             this.resetTablePosition();
         }
-        else if (this.state==3)
+        else if (this.state == 3)
         {
             tableAnimator.enabled = true;
         }
@@ -186,10 +206,11 @@ public class StateMachine : MonoBehaviour
         if (benAnimator.enabled)
         {
             benAnimator.enabled = false;
-            ben2.transform.localPosition = new Vector3(0, 0, 0);
+            ben1.transform.localPosition = new Vector3(0, -4, 0);
+            ben1.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        else if (this.state== 2)
+        else if (this.state == 2)
         {
             benAnimator.enabled = true;
         }
@@ -197,7 +218,7 @@ public class StateMachine : MonoBehaviour
         if (skruAnimator.enabled)
         {
             skruAnimator.enabled = false;
-            skrue1.transform.localPosition = new Vector3(0, 0, 0);
+            skrue4.transform.localPosition = new Vector3((float)-5.193, (float)-0.665, (float)5.196);
         }
 
         else if (this.state == 1)
@@ -210,7 +231,8 @@ public class StateMachine : MonoBehaviour
 
     public void ResetPosition()
     {
-        parent.transform.localPosition = Camera.main.transform.position + 3 * Vector3.Scale((menu.transform.position - Camera.main.transform.position), new Vector3(1,0,1));
+        parent.transform.localPosition = Camera.main.transform.position + 3 * Vector3.Scale((menu.transform.position - Camera.main.transform.position), new Vector3(1, 0, 1));
+        parent.transform.localRotation = Quaternion.Euler(0, 0, 0);
         this.state = 0;
         this.UpdateState();
     }
